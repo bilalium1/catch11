@@ -20,7 +20,6 @@ typedef struct block_s
 {
 	int x;
 	int y;
-	struct block_s *n;
 } block_t;
 
 // Score struct
@@ -35,10 +34,11 @@ typedef struct score_s
 // Game struct
 typedef struct catch_s
 {
+	pthread_mutex_t m;
 	int w;
 	int h;
 	block_t *player;
-	block_t **objs;
+	block_t *objs;
 	stack_t **input_log;
 	score_t *stats;
 	char **grid;
@@ -49,15 +49,6 @@ void stack_push(stack_t **st, char id)
 {
 	stack_t *new = malloc(sizeof(stack_t));
 	new->id = id;
-	new->n = *st;
-	*st = new;
-}
-
-void block_push(block_t **st, char id, int x, int y)
-{
-	block_t *new = malloc(sizeof(block_t));
-	new->x = x;
-	new->y = y;
 	new->n = *st;
 	*st = new;
 }
@@ -90,24 +81,32 @@ catch_t* init_catch()
 {
 	catch_t* game = malloc(sizeof(catch_t));
 	if (!game) return 0;
-	stack_t *input = malloc(sizeof(stack_t));
 	score_t *stats = malloc(sizeof(score_t));
 	block_t *p = malloc(sizeof(block_t));
 
-	p->x = 5;
-	p->y = 9;
-	p->n = NULL;
-
-	game->input_log = &input;
-	game->stats = stats;
-	game->player = p;
-	game->objs = NULL;
-
-	int w = 12;
-	int h = 10;
+	int w = 25;
+	int h = 25;
 	game->w = w;
 	game->h = h;
+	
+	p->x = 5;
+	p->y = h - 1;
 
+	int len = (w + h) / 2;
+	
+	game->input_log = malloc(sizeof(stack_t));
+	*game->input_log = NULL;
+	
+	game->stats = stats;
+	game->player = p;
+	game->objs = malloc(sizeof(block_t) * len);
+
+	for (int i = 0; i < len; i++)
+	{
+		(game->objs[i]).x = -1;
+		(game->objs[i]).y = -1;
+	}
+	
 	char **grid = malloc(sizeof(char *) * h);
     int i = 0;
     while (i < h)
