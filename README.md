@@ -26,3 +26,6 @@ make
 make run
 ```
 
+- if it doesn't work, i could care less
+
+Thank you for reading!
