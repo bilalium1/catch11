@@ -1,9 +1,11 @@
 #include "catch.h"
 
-int main()
+int main(int ac, char **av)
 {
-    catch_t* game = init_catch();
-    
+    int* info = parser(ac, av);
+    if (!info) return 0;
+    catch_t* game = init_catch(info);
+    printf("hh");
     pthread_t key_log;
     pthread_t show;
     pthread_t catch;

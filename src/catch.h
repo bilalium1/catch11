@@ -37,6 +37,8 @@ typedef struct catch_s
 	pthread_mutex_t m;
 	int w;
 	int h;
+	int speed;
+	int fps;
 	block_t *player;
 	block_t *objs;
 	stack_t **input_log;
@@ -46,9 +48,10 @@ typedef struct catch_s
 } catch_t;
 
 char **refresh_grid(char **grid, int w, int h);
-catch_t* init_catch();
+catch_t* init_catch(int* info);
 void *catch_thread(void *arg);
 void* get_input(void* arg);
 void* display(void* arg);
+int* parser(int ac, char **av);
 
 #endif

@@ -1,5 +1,5 @@
 CC=gcc
-SRCS = main.c
+SRCS = main.c display.c input.c catch.c
 NAME = catch.11
 
 all : $(NAME)
