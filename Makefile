@@ -8,7 +8,7 @@ $(NAME): $(SRCS)
 	$(CC) $(SRCS) -pthread -o $@
 
 run : all
-	./$(NAME) 11 11 5 11
+	./$(NAME) 11 11 2 11
 
 clean :
 	rm -rf $(NAME)
