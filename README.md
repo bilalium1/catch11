@@ -1,4 +1,4 @@
-# Catch11 - implementation of catch11 on the terminal
+# Catch11 - implementation of EZ2Catch on the terminal
 
 ### ! - This game is only compatible with UNIX-based systems
 
